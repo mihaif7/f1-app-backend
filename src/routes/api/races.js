@@ -1,15 +1,22 @@
 const express = require("express");
 const router = express.Router();
-const Races = require("../../models/lap_times");
+var initModels = require("../../models/init-models");
+const { Op } = require("sequelize");
 
-// Get all users
+var models = initModels(sequelize);
+
+// races by year
 router.get("/:year", async (req, res) => {
-  const races = await Races.findAll({
-    where: {
-      year: req.params.year,
-    },
-  }).catch(errHandler);
-  res.json(races);
+  const results = await models.races
+    .findAll({
+      where: {
+        year: req.params.year,
+        date: { [Op.lte]: Date.now() },
+      },
+      order: [["round", "ASC"]],
+    })
+    .catch(errHandler);
+  res.json(results);
 });
 
 // Get single user

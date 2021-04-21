@@ -1,5 +1,5 @@
 module.exports = async () => {
-  const Races = require("./models/lap_times");
+  const Races = require("./models/races");
 
   const errHandler = (err) => {
     console.log("Error: ", err);

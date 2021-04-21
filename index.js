@@ -5,9 +5,15 @@ const cors = require("cors");
 
 const app = express();
 
+const corsOptions = {
+  origin: "http://localhost:3000",
+  optionsSuccessStatus: 200,
+  methods: "GET, PUT",
+};
+
 // Init middleware
 app.use(logger);
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -21,7 +27,11 @@ require("./src/database/connection");
 require("./src/bootstrap")();
 
 // User routes
+app.use("/api/seasons", require("./src/routes/api/seasons"));
 app.use("/api/races", require("./src/routes/api/races"));
+app.use("/api/results", require("./src/routes/api/results"));
+app.use("/api/laptimes", require("./src/routes/api/laptimes"));
+app.use("/api/circuit", require("./src/routes/api/circuit"));
 
 // App config
 const PORT = process.env.PORT || 5000;

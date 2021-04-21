@@ -1,49 +1,51 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('races', {
-    raceId: {
+  return sequelize.define('circuits', {
+    circuitId: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    year: {
-      type: DataTypes.INTEGER,
+    circuitRef: {
+      type: DataTypes.STRING(255),
       allowNull: false,
-      defaultValue: 0
-    },
-    round: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
-    },
-    circuitId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
+      defaultValue: ""
     },
     name: {
       type: DataTypes.STRING(255),
       allowNull: false,
       defaultValue: ""
     },
-    date: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-      defaultValue: "0000-00-00"
+    location: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     },
-    time: {
-      type: DataTypes.TIME,
+    country: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    lat: {
+      type: DataTypes.FLOAT,
+      allowNull: true
+    },
+    lng: {
+      type: DataTypes.FLOAT,
+      allowNull: true
+    },
+    alt: {
+      type: DataTypes.INTEGER,
       allowNull: true
     },
     url: {
       type: DataTypes.STRING(255),
-      allowNull: true,
+      allowNull: false,
+      defaultValue: "",
       unique: "url"
     }
   }, {
     sequelize,
-    tableName: 'races',
+    tableName: 'circuits',
     timestamps: false,
     indexes: [
       {
@@ -51,7 +53,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "raceId" },
+          { name: "circuitId" },
         ]
       },
       {

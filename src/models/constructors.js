@@ -1,49 +1,35 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('races', {
-    raceId: {
+  return sequelize.define('constructors', {
+    constructorId: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    year: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
-    },
-    round: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
-    },
-    circuitId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
-    },
-    name: {
+    constructorRef: {
       type: DataTypes.STRING(255),
       allowNull: false,
       defaultValue: ""
     },
-    date: {
-      type: DataTypes.DATEONLY,
+    name: {
+      type: DataTypes.STRING(255),
       allowNull: false,
-      defaultValue: "0000-00-00"
+      defaultValue: "",
+      unique: "name"
     },
-    time: {
-      type: DataTypes.TIME,
+    nationality: {
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     url: {
       type: DataTypes.STRING(255),
-      allowNull: true,
-      unique: "url"
+      allowNull: false,
+      defaultValue: ""
     }
   }, {
     sequelize,
-    tableName: 'races',
+    tableName: 'constructors',
     timestamps: false,
     indexes: [
       {
@@ -51,15 +37,15 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "raceId" },
+          { name: "constructorId" },
         ]
       },
       {
-        name: "url",
+        name: "name",
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "url" },
+          { name: "name" },
         ]
       },
     ]

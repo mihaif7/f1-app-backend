@@ -1,49 +1,36 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('races', {
+  return sequelize.define('laptimes', {
     raceId: {
-      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    year: {
+    driverId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0
+      primaryKey: true
     },
-    round: {
+    lap: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0
+      primaryKey: true
     },
-    circuitId: {
+    position: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
-    },
-    name: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      defaultValue: ""
-    },
-    date: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-      defaultValue: "0000-00-00"
-    },
-    time: {
-      type: DataTypes.TIME,
       allowNull: true
     },
-    url: {
+    time: {
       type: DataTypes.STRING(255),
-      allowNull: true,
-      unique: "url"
+      allowNull: true
+    },
+    milliseconds: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'races',
+    tableName: 'laptimes',
     timestamps: false,
     indexes: [
       {
@@ -52,14 +39,22 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "raceId" },
+          { name: "driverId" },
+          { name: "lap" },
         ]
       },
       {
-        name: "url",
-        unique: true,
+        name: "raceId",
         using: "BTREE",
         fields: [
-          { name: "url" },
+          { name: "raceId" },
+        ]
+      },
+      {
+        name: "raceId_2",
+        using: "BTREE",
+        fields: [
+          { name: "raceId" },
         ]
       },
     ]
