@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://lapbylap.netlify.app/"],
+  origin: ["http://localhost:3000", "https://lapbylap.netlify.app"],
   optionsSuccessStatus: 200,
   methods: "GET",
 };
