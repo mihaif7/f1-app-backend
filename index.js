@@ -6,9 +6,13 @@ const cors = require("cors");
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: [
+    "http://localhost:3000",
+    "http://192.168.0.107:3000",
+    "http://localhost:45679",
+  ],
   optionsSuccessStatus: 200,
-  methods: "GET, PUT",
+  methods: "GET",
 };
 
 // Init middleware

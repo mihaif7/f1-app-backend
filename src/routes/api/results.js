@@ -28,6 +28,20 @@ router.get("/:raceId", async (req, res) => {
   res.json(results);
 });
 
+// Get all users
+router.get("/quali/:raceId", async (req, res) => {
+  const results = await sequelize
+    .query(
+      `select * from qualifying as q inner join drivers as d on q.driverId = d.driverId 
+       where raceId = ${req.params.raceId}`,
+      {
+        type: QueryTypes.SELECT,
+      }
+    )
+    .catch(errHandler);
+  res.json(results);
+});
+
 // Helpers
 const errHandler = (err) => {
   console.log("Error: ", err);
