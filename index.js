@@ -10,6 +10,7 @@ const corsOptions = {
     "http://localhost:3000",
     "http://192.168.0.107:3000",
     "http://localhost:45679",
+    "http://localhost:11263",
   ],
   optionsSuccessStatus: 200,
   methods: "GET",

@@ -42,6 +42,34 @@ router.get("/quali/:raceId", async (req, res) => {
   res.json(results);
 });
 
+router.get("/standings/constructors/:raceId", async (req, res) => {
+  const results = await sequelize
+    .query(
+      `SELECT * 
+      FROM constructorstandings AS c 
+          inner join constructors AS ct ON c.constructorId = ct.constructorId
+      WHERE raceId=${req.params.raceId} ORDER BY position`,
+      {
+        type: QueryTypes.SELECT,
+      }
+    )
+    .catch(errHandler);
+  res.json(results);
+});
+
+router.get("/standings/drivers/:raceId", async (req, res) => {
+  const results = await sequelize
+    .query(
+      `SELECT * FROM driverstandings as ds inner join drivers as d on ds.driverId = d.driverId
+      WHERE raceId=${req.params.raceId} ORDER BY position`,
+      {
+        type: QueryTypes.SELECT,
+      }
+    )
+    .catch(errHandler);
+  res.json(results);
+});
+
 // Helpers
 const errHandler = (err) => {
   console.log("Error: ", err);
