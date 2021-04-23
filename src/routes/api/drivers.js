@@ -8,7 +8,8 @@ router.get("/:raceId", async (req, res) => {
   const results = await sequelize
     .query(
       `SELECT d.driverId, d.number, code, forename, surname FROM drivers as d
-        INNER JOIN results as r ON d.driverId = r.driverId WHERE r.raceId =${req.params.raceId}`,
+        INNER JOIN results as r ON d.driverId = r.driverId WHERE r.raceId =${req.params.raceId}
+        ORDER BY number`,
       {
         type: QueryTypes.SELECT,
       }
