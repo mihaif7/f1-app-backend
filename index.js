@@ -32,6 +32,7 @@ app.use("/api/races", require("./src/routes/api/races"));
 app.use("/api/results", require("./src/routes/api/results"));
 app.use("/api/laptimes", require("./src/routes/api/laptimes"));
 app.use("/api/circuit", require("./src/routes/api/circuit"));
+app.use("/api/drivers", require("./src/routes/api/drivers"));
 
 // App config
 const PORT = process.env.PORT || 5000;
