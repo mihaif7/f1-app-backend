@@ -21,17 +21,45 @@ router.get("/:raceId/:driverId", async (req, res) => {
     )
     .catch(errHandler);
   res.json(results);
+});
 
-  // const results = await models.laptimes
-  //   .findAll({
-  //     where: {
-  //       driverId: req.params.driverId,
-  //       raceId: req.params.raceId,
-  //     },
-  //     order: [["lap", "ASC"]],
-  //   })
-  //   .catch(errHandler);
-  // res.json(results);
+router.get("/summary/:raceId/:driverId", async (req, res) => {
+  const results = await sequelize
+    .query(
+      `SELECT 
+          min(l.time) as fastestLapString, 
+          min(l.milliseconds) as fastLap, 
+          avg(l.milliseconds) as avgPace, 
+          max(l.milliseconds) as slowestLap, 
+          max(p.stop) as pitStops, 
+          avg(p.milliseconds) as avgPit
+       FROM 
+          laptimes as l 
+       INNER JOIN
+          pitstops as p on l.raceId = p.raceId and l.driverId = p.driverId
+       WHERE l.driverId = ${req.params.driverId} and l.raceId = ${req.params.raceId}`,
+      {
+        type: QueryTypes.SELECT,
+      }
+    )
+    .catch(errHandler);
+  res.json(results);
+});
+
+router.get("/summary/old/:raceId/:driverId", async (req, res) => {
+  const results = await sequelize
+    .query(
+      `SELECT 
+          min(time) as fastestLapString, min(milliseconds) as fastLap , avg(milliseconds) as avgPace, max(milliseconds) as slowestLap
+       FROM 
+          laptimes
+       WHERE driverId = ${req.params.driverId} and raceId = ${req.params.raceId}`,
+      {
+        type: QueryTypes.SELECT,
+      }
+    )
+    .catch(errHandler);
+  res.json(results);
 });
 
 // Helpers
