@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 var initModels = require("../../models/init-models");
 const { Op } = require("sequelize");
+const { QueryTypes } = require("sequelize");
 
 var models = initModels(sequelize);
 
@@ -16,6 +17,23 @@ router.get("/:year", async (req, res) => {
       order: [["round", "ASC"]],
     })
     .catch(errHandler);
+  res.json(results);
+});
+
+router.get("/:year/next", async (req, res) => {
+  const results = await sequelize
+    .query(
+      `select a.* from races a 
+      join
+      (select min(r.round) as nextRound from races r where r.date > curdate()) m
+      on a.round = m.nextRound
+      where a.year = ${req.params.year}`,
+      {
+        type: QueryTypes.SELECT,
+      }
+    )
+    .catch(errHandler);
+
   res.json(results);
 });
 
