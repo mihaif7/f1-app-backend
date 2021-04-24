@@ -9,7 +9,7 @@ var models = initModels(sequelize);
 router.get("/", async (req, res) => {
   const results = await models.seasons
     .findAll({
-      where: { year: { [Op.gte]: 2010 } },
+      where: { year: { [Op.gte]: 1996 } },
       order: [["year", "DESC"]],
     })
     .catch(errHandler);
