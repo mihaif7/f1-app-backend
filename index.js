@@ -6,7 +6,11 @@ const cors = require("cors");
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://lapbylap.netlify.app"],
+  origin: [
+    "http://localhost:3000",
+    "https://lapbylap.netlify.app",
+    "http://localhost:5000",
+  ],
   optionsSuccessStatus: 200,
   methods: "GET",
 };
@@ -35,6 +39,6 @@ app.use("/api/circuit", require("./src/routes/api/circuit"));
 app.use("/api/drivers", require("./src/routes/api/drivers"));
 
 // App config
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
