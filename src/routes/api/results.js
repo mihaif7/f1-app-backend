@@ -36,7 +36,7 @@ router.get("/quali/:raceId", async (req, res) => {
       `select q.*, d.*, c.constructorRef from qualifying as q 
         inner join drivers as d on q.driverId = d.driverId
         inner join constructors as c on q.constructorId = c.constructorId 
-       where raceId = ${req.params.raceId}`,
+       where raceId = ${req.params.raceId} order by q.position`,
       {
         type: QueryTypes.SELECT,
       }
